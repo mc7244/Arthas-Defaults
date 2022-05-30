@@ -1,4 +1,4 @@
-package Arthas::Defaults::534;
+package Arthas::Defaults::536;
 
 use v5.36;
 use warnings FATAL => 'all';
@@ -45,7 +45,7 @@ __END__
 
 =head1 NAME
 
-Arthas::Defaults::534 - Defaults for coding with perl 5.36 - Do not use if you're not Arthas
+Arthas::Defaults::536 - Defaults for coding with perl 5.36 - Do not use if you're not Arthas
 
 =head1 SYNOPSIS
 
