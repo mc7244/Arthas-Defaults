@@ -1,15 +1,14 @@
-package Arthas::Defaults;
+package Arthas::Defaults::534;
 
-use v5.14;
+use v5.36;
 use warnings FATAL => 'all';
 no warnings 'uninitialized';
 use utf8;
 use feature();
+use feature 'try';
+no warnings 'experimental::try';
 use version;
 use Carp qw/carp croak confess cluck/;
-use Try::Tiny;
-
-our $VERSION = qv("v5.0.0");
 
 require Exporter;
 our @ISA       = ('Exporter');
@@ -19,14 +18,16 @@ our @EXPORT    = qw/
 /;
 
 sub import {
-    feature->import(':5.14');
+    feature->import(':5.36');
     strict->import();
     warnings->import(FATAL => 'all');
     warnings->unimport('uninitialized');
     utf8->import();
 
+    experimental->import('try');
+
     # Export all @EXPORT
-    Arthas::Defaults->export_to_level(1, @_);
+    Arthas::Defaults::536->export_to_level(1, @_);
 }
 
 sub unimport {
@@ -34,6 +35,8 @@ sub unimport {
     strict->unimport();
     warnings->unimport();
     utf8->unimport();
+
+    experimental->unimport('try');
 }
 
 1;
@@ -42,8 +45,7 @@ __END__
 
 =head1 NAME
 
-Arthas::Defaults - Defaults for coding - Do not use if you're not Arthas. Also, this is only
-for backward compatibility. Please use B<Arthas::Defaults::536>.
+Arthas::Defaults::534 - Defaults for coding with perl 5.36 - Do not use if you're not Arthas
 
 =head1 SYNOPSIS
 
@@ -53,10 +55,11 @@ for backward compatibility. Please use B<Arthas::Defaults::536>.
 
 It's like saying:
 
-    use v5.14;
+    use v5.36;
     use utf8;
     use warnings;
     no warnings 'uninitialized';
+    use experimental 'signatures';
     use Carp qw/carp croak confess cluck/;
     use Try::Tiny;
 
@@ -64,16 +67,16 @@ Might change without notice, at any time. DO NOT USE!
 
 =over
 
-=item C<use v5.14>
+=item C<use v5.36>
 
-This is actually C<use feature ':5.14'>. It imports some perl 5.10 -> 5.14
-semantics, such as strict, given-when syntax, Unicode strings, ... See
+This is actually C<use feature ':5.36'>. It imports some perl 5.10 -> 5.36
+semantics, such as strict, given-when syntax, Unicode strings, signatures, ... See
 L<feature> documentation and source code for more information.
 
 =item C<use utf8>
 
 This is NOT related to handling UTF-8 strings or input/output (see
-C<use feature 'unicode_strings'> imported with C<use v5.14> for
+C<use feature 'unicode_strings'> imported with C<use v5.20> for
 something more related to that).
 
 C<use utf8> is imported in order to allow UTF-8 characters inside the source
@@ -81,7 +84,7 @@ code: while using UTF-8 in the source is not standard procedure, it
 happens to me every now and then. Also, enabling this feature does
 no harm if you're using a recent version of perl, so why not enable it?
 
-=item C<use warnings FATAL => 'all'>
+=item C<use warnings FATAL =E<gt> 'all'>
 
 Warnings are useful, who wouldn't want them?
 
@@ -114,13 +117,17 @@ which is boring enough to justify suppressing these warnings.
 These functions are very useful to show error details better
 than that of C<die()> and C<warn()>.
 
-=item C<use Try::Tiny>
+=item C<use experimental 'try'>
 
-L<Try::Tiny> provides minimal C<try/catch/finally> statements,
-which make for interesting sugar and a few nice features over
-C<eval>.
+Try - catch - finaly... finally!
 
 =back
+
+=head1 WARNING
+
+The 5.36 version of this module is not compatible with the previous one,
+bcause it replaces L<Try::Tiny> with Perl's own new Try/Catch syntax,
+and discards the obsoleted C<postderef> syntax.
 
 =head1 AUTHOR
 
